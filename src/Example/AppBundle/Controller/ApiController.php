@@ -12,28 +12,47 @@ use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Delete;
 
+use Example\AppBundle\Entity\Doctor;
+
+
 /**
- * Class DefaultController
+ * Class ApiController
  * @package Example\AppBundle\Controller
  */
-class DefaultController extends Controller
+class ApiController extends Controller
 {
     /**
      *
-     * Главная страница
+     * Список врачей
      *
      * @ApiDoc(
-     *  section="Default",
+     *  section="Api",
      *  statusCodes={
      *      200="ok",
      *      400="internal Error",
      *  }
      * )
      *
-     * @Get("/")
+     * @Get("/doctor")
      */
-    public function indexAction()
+    public function getDoctorList()
     {
-        return $this->render('ExampleAppBundle::base.html.twig');
+        $doctors = $this->getDoctrine()->getManager('example')
+            ->getRepository('ExampleAppBundle:Doctor')
+            ->findAll();
+
+        $doctorList = [];
+
+        if ($doctors) {
+            foreach ($doctors as $doctor) {
+
+                $doctorList[] = $doctor->toArray();
+
+            }
+        }
+
+        $response = new JsonResponse($doctorList, 200);
+
+        return $response->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 }

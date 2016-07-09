@@ -1,0 +1,9 @@
+example_app:
+    resource: Example\AppBundle\Controller\DefaultController
+    type:     annotation
+    prefix:   /
+
+example_app_api:
+    resource: Example\AppBundle\Controller\ApiController
+    type:     annotation
+    prefix:   /api
