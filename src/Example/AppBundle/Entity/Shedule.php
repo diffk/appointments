@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Example\AppBundle\Entity\Doctor;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Example\AppBundle\Entity\SheduleRepository")
  * @ORM\Table(name="shedule")
  */
 class Shedule {
@@ -37,12 +37,7 @@ class Shedule {
     /**
      * @ORM\Column(type="text", length=1000)
      */
-    private $opened;
-
-    /**
-     * @ORM\Column(type="text", length=1000)
-     */
-    private $closed;
+    private $records;
 
     /**
      * Get id
@@ -103,51 +98,27 @@ class Shedule {
     }
 
     /**
-     * Set opened
+     * Set records
      *
-     * @param string $opened
+     * @param string $records
      *
      * @return Shedule
      */
-    public function setOpened($opened)
+    public function setRecords($records)
     {
-        $this->opened = $opened;
+        $this->records = $records;
 
         return $this;
     }
 
     /**
-     * Get opened
+     * Get records
      *
      * @return string
      */
-    public function getOpened()
+    public function getRecords()
     {
-        return $this->opened;
-    }
-
-    /**
-     * Set closed
-     *
-     * @param string $closed
-     *
-     * @return Shedule
-     */
-    public function setClosed($closed)
-    {
-        $this->closed = $closed;
-
-        return $this;
-    }
-
-    /**
-     * Get closed
-     *
-     * @return string
-     */
-    public function getClosed()
-    {
-        return $this->closed;
+        return $this->records;
     }
 
     /**
@@ -172,5 +143,19 @@ class Shedule {
     public function getDoctor()
     {
         return $this->doctor;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'doctor_id' => $this->getDoctor()->getId(),
+            'week' => $this->getWeek(),
+            'year' => $this->getYear(),
+            'records' => json_decode($this->getRecords(), true),
+        );
     }
 }

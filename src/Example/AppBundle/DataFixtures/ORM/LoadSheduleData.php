@@ -11,16 +11,6 @@ class LoadSheduleData implements FixtureInterface
     public function load(ObjectManager $manager)
     {
 
-        $closed = [
-            "mon" => [],
-            "tue" => [],
-            "wed" => [],
-            "thu" => [],
-            "fri" => [],
-            "sat" => [],
-            "sun" => []
-        ];
-
         $elMocked = [
             [
                 "start" => "11:00",
@@ -80,8 +70,7 @@ class LoadSheduleData implements FixtureInterface
                 $testShedule->setDoctor($doctor);
                 $testShedule->setYear(2016);
                 $testShedule->setWeek($i);
-                $testShedule->setClosed(json_encode($closed));
-                $testShedule->setOpened(json_encode($opened));
+                $testShedule->setRecords(json_encode($opened));
 
                 $manager->persist($testShedule);
                 $manager->flush();
