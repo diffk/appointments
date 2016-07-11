@@ -99,6 +99,8 @@ class ApiController extends Controller
             }
         }
 
+        $sheduleList = $this->filteredDays($sheduleList);
+
         return new JsonResponse($sheduleList, 200);
 
     }
@@ -200,5 +202,36 @@ class ApiController extends Controller
         $date = strtotime($year . 'W' . $weekNumber . $day . ' 00:00:00');
 
         return date('Y-m-d', $date);
+    }
+
+    /**
+     * Фильтрация прошедших дат(включая текущий день)
+     *
+     * @param array $sheduleList
+     * @return array
+     */
+    private function filteredDays($sheduleList)
+    {
+        $days = [
+            1 => "mon",
+            2 => "tue",
+            3 => "wed",
+            4 => "thu",
+            5 => "fri",
+            6 => "sat",
+            7 => "sun"
+        ];
+
+        $currentDay = strtolower(date('D'));
+        $dayIndex = array_search($currentDay, $days) - 1;
+        $i = 0;
+        foreach ($sheduleList[0]['records'] as $key => &$record) {
+            if ($i <= $dayIndex) {
+                $record = [];
+            }
+            $i++;
+        }
+
+        return $sheduleList;
     }
 }
