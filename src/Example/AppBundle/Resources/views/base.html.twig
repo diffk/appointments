@@ -51,7 +51,6 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#welcome">Welcome</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#record">Запись</a></li>
                 </ul>
@@ -64,8 +63,12 @@
         <div id="content-region">
             <div class="row">
                 <div class="col-md-3"></div>
-                <div class="col-md-3"><li><a href="#record">Запись на прием</a></li></div>
-                <div class="col-md-3"><li><a href="#records">Ваши записи</a></li></div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary btn-lg" id="record">Запись на прием</button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary btn-lg" id="records" disabled="disabled">Ваши записи</button>
+                </div>
                 <div class="col-md-3"></div>
             </div>
 

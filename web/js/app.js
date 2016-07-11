@@ -23,12 +23,20 @@ App.prototype.initEvents = function () {
         $('#aboutModal').modal();
     });
 
-    $("a[href=\"#record\"]").on('click', function () {
+    $("#record").on('click', function () {
         self.doctorView();
     });
 
-    $("a[href=\"#records\"]").on('click', function () {
+    $('a[href=\"#record\"]').on('click', function () {
+        self.doctorView();
+    });
+
+    $("#records").on('click', function () {
         self.recordsView();
+    });
+
+    $("a[href=\"#welcome\"]").on('click', function () {
+        window.location.replace('/');
     });
 
 };
