@@ -93,9 +93,9 @@ class ApiController extends Controller
 
         if ($shedules) {
             foreach ($shedules as $shedule) {
-
-                $sheduleList[] = $shedule->toArray();
-
+                $record = $shedule->toArray();
+                $record['period'] = $this->getDatesByWeek($record['week'], $record['year']);
+                $sheduleList[] = $record;
             }
         }
 
@@ -125,7 +125,7 @@ class ApiController extends Controller
      *
      * @return JsonResponse
      */
-    public function updateShedule(Request $request, $id)
+    public function updateSheduleAction(Request $request, $id)
     {
 
         $day = $request->request->get('day', 'не указан день');
@@ -148,6 +148,57 @@ class ApiController extends Controller
             return new JsonResponse(['message' => 'занято, выберите другой период'], 422);
         }
 
-        return new JsonResponse($result, 200);
+        $message = sprintf(
+            "Вы записаны на прием к специалисту %s,
+            дата посещения: %s,
+            время приема %s",
+            $shedule->getDoctor()->getName(),
+            $this->getDateM($shedule->getWeek(), $shedule->getYear(), $day),
+            $start
+        );
+
+        return new JsonResponse(['message' => $message], 200);
+    }
+
+    /**
+     * @param int $weekNumber
+     * @param null $year
+     * @return string
+     */
+    private function getDatesByWeek($weekNumber, $year = null)
+    {
+        $year = $year ? $year : date('Y');
+        $weekNumber = sprintf('%02d', $weekNumber);
+        $dateFirst = strtotime($year . 'W' . $weekNumber . '1 00:00:00');
+        $dateEnd = strtotime($year . 'W' . $weekNumber . '7 23:59:59');
+
+        return date('Y-m-d', $dateFirst) . ' - ' . date('Y-m-d', $dateEnd);
+    }
+
+    /**
+     * @param $weekNumber
+     * @param $year
+     * @param $day
+     * @return bool|string
+     */
+    private function getDateM($weekNumber, $year, $day)
+    {
+
+        $days = [
+            1 => "mon",
+            2 => "tue",
+            3 => "wed",
+            4 => "thu",
+            5 => "fri",
+            6 => "sat",
+            7 => "sun"
+        ];
+
+        $year = $year ? $year : date('Y');
+        $day = array_search($day, $days);
+        $weekNumber = sprintf('%02d', $weekNumber);
+        $date = strtotime($year . 'W' . $weekNumber . $day . ' 00:00:00');
+
+        return date('Y-m-d', $date);
     }
 }

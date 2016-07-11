@@ -1,0 +1,139 @@
+<script type="text/template" id="shedule-list">
+
+    <div class="row">
+        <div class="col-md-5">период</div>
+        <div class="col-md-1">Понедельник</div>
+        <div class="col-md-1">Вторник</div>
+        <div class="col-md-1">Среда</div>
+        <div class="col-md-1">Четверг</div>
+        <div class="col-md-1">Пятница</div>
+        <div class="col-md-1">Суббота</div>
+        <div class="col-md-1">Воскр.</div>
+    </div>
+
+
+    <% _.each(rows,function(item,key,arr) {
+        console.log(item);
+    %>
+
+    <div class="row margin-top-10" data-id="<%= item.id %>">
+        <div class="col-md-5"><%= item.period %></div>
+
+        <% if(item.records.mon) { %>
+            <div class="col-md-1" data-day="mon">
+                <% _.each(item.records.mon,function(el,key,arr) { %>
+                    <span class="label
+                    <% if(el.used) { %>
+                    label-default
+                    <% } else { %>
+                    label-success hovered
+                    <% } %>
+                    "><%= el.start %>-<%= el.end %></span>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div class="col-md-1" data-day="mon"></div>
+        <% } %>
+
+        <% if(item.records.tue) { %>
+        <div class="col-md-1" data-day="tue">
+            <% _.each(item.records.tue,function(el,key,arr) { %>
+                    <span class="label
+                    <% if(el.used) { %>
+                    label-default
+                    <% } else { %>
+                    label-success hovered
+                    <% } %>
+                    "><%= el.start %>-<%= el.end %></span>
+            <% }); %>
+        </div>
+        <% } else { %>
+        <div class="col-md-1" data-day="tue"></div>
+        <% } %>
+
+        <% if(item.records.wed) { %>
+        <div class="col-md-1" data-day="wed">
+            <% _.each(item.records.wed,function(el,key,arr) { %>
+                    <span class="label
+                    <% if(el.used) { %>
+                    label-default
+                    <% } else { %>
+                    label-success hovered
+                    <% } %>
+                    "><%= el.start %>-<%= el.end %></span>
+            <% }); %>
+        </div>
+        <% } else { %>
+        <div class="col-md-1" data-day="wed"></div>
+        <% } %>
+
+        <% if(item.records.thu) { %>
+        <div class="col-md-1" data-day="thu">
+            <% _.each(item.records.thu,function(el,key,arr) { %>
+                    <span class="label
+                    <% if(el.used) { %>
+                    label-default
+                    <% } else { %>
+                    label-success hovered
+                    <% } %>
+                    "><%= el.start %>-<%= el.end %></span>
+            <% }); %>
+        </div>
+        <% } else { %>
+        <div class="col-md-1" data-day="thu"></div>
+        <% } %>
+
+        <% if(item.records.fri) { %>
+        <div class="col-md-1" data-day="fri">
+            <% _.each(item.records.fri,function(el,key,arr) { %>
+                    <span class="label
+                    <% if(el.used) { %>
+                    label-default
+                    <% } else { %>
+                    label-success hovered
+                    <% } %>
+                    "><%= el.start %>-<%= el.end %></span>
+            <% }); %>
+        </div>
+        <% } else { %>
+        <div class="col-md-1" data-day="fri"></div>
+        <% } %>
+
+        <% if(item.records.sat) { %>
+        <div class="col-md-1" data-day="sat">
+            <% _.each(item.records.fri,function(el,key,arr) { %>
+                    <span class="label
+                    <% if(el.used) { %>
+                    label-default
+                    <% } else { %>
+                    label-success hovered
+                    <% } %>
+                    "><%= el.start %>-<%= el.end %></span>
+            <% }); %>
+        </div>
+        <% } else { %>
+        <div class="col-md-1" data-day="sat"></div>
+        <% } %>
+
+        <% if(item.records.sun) { %>
+        <div class="col-md-1" data-day="sun">
+            <% _.each(item.records.fri,function(el,key,arr) { %>
+                    <span class="label
+                    <% if(el.used) { %>
+                    label-default
+                    <% } else { %>
+                    label-success hovered
+                    <% } %>
+                    "><%= el.start %>-<%= el.end %></span>
+            <% }); %>
+        </div>
+        <% } else { %>
+        <div class="col-md-1" data-day="sun"></div>
+        <% } %>
+
+    </div>
+
+    <% }); %>
+
+
+</script>
