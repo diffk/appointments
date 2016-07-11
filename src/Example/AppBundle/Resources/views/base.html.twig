@@ -20,6 +20,8 @@
     <!-- Custom styles for this template -->
     <link href="css/navbar.css" rel="stylesheet">
 
+    <link href="css/main.css" rel="stylesheet">
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.js"></script>
@@ -58,15 +60,34 @@
     </nav>
 
     <!-- Main component for a primary marketing message or call to action -->
-    welcome
+    {% block content %}
+        <div id="content-region">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3"><li><a href="#record">Запись на прием</a></li></div>
+                <div class="col-md-3"><li><a href="#records">Ваши записи</a></li></div>
+                <div class="col-md-3"></div>
+            </div>
+
+        </div>
+    {% endblock %}
 
 </div> <!-- /container -->
 
+<div id="formhelper" class="hidden"></div>
+
+{% block template %}
+    {% include 'ExampleAppBundle::doctor-list.html.twig' %}
+    {% include 'ExampleAppBundle::shedule-list.html.twig' %}
+    {% include 'ExampleAppBundle:modal:about.html.twig' %}
+    {% include 'ExampleAppBundle:modal:note.html.twig' %}
+{% endblock %}
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="js/common/jquery.min.js"></script>
+<script src="js/common/jquery-loader.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="js/ie10-viewport-bug-workaround.js"></script>

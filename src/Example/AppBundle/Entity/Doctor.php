@@ -149,4 +149,17 @@ class Doctor {
     {
         return $this->description;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'profile' => $this->getProfile(),
+            'description' => $this->getDescription(),
+        );
+    }
 }

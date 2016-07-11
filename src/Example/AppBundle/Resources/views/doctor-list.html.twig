@@ -1,0 +1,23 @@
+<script type="text/template" id="doctor-list">
+    <table class="table table-condensed table-hover">
+
+        <thead>
+        <tr>
+            <th></th>
+            <th>имя</th>
+            <th>профиль</th>
+            <th>описание</th>
+        </tr>
+        </thead>
+
+        <% _.each(rows,function(item,key,arr) { %>
+        <tr class="element" data-id="<%= item.id %>">
+            <td></td>
+            <td><%= item.name %></td>
+            <td><%= item.profile %></td>
+            <td><%= item.description %></td>
+        </tr>
+        <% }); %>
+
+    </table>
+</script>
