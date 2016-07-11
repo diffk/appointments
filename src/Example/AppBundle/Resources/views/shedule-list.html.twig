@@ -1,6 +1,10 @@
 <script type="text/template" id="shedule-list">
 
     <div class="row">
+        <div class="col-md-12 centered"><h3>расписание доктора <%= doctor %></h3></div>
+    </div>
+
+    <div class="row">
         <div class="col-md-5">период</div>
         <div class="col-md-1">Понедельник</div>
         <div class="col-md-1">Вторник</div>
@@ -12,12 +16,10 @@
     </div>
 
 
-    <% _.each(rows,function(item,key,arr) {
-        console.log(item);
-    %>
+    <% _.each(rows,function(item,key,arr) { %>
 
     <div class="row margin-top-10" data-id="<%= item.id %>">
-        <div class="col-md-5"><%= item.period %></div>
+        <div class="col-md-5"><h3><%= item.period %></h3></div>
 
         <% if(item.records.mon) { %>
             <div class="col-md-1" data-day="mon">

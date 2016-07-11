@@ -57,6 +57,7 @@ App.prototype.showDoctorTable = function (data) {
 App.prototype.sheduleView = function (e) {
     var self = this;
     var id = $(e.currentTarget).data('id');
+    this.currentDoctor = $($(e.currentTarget).children()[1]).html();
 
     $.loader.open();
     $.get("/api/doctor/" + id + "/shedule", function (data) {
@@ -70,7 +71,7 @@ App.prototype.sheduleView = function (e) {
 App.prototype.showShedule = function (data) {
     var self = this;
 
-    var result = this.template.sheduleList({rows: data});
+    var result = this.template.sheduleList({rows: data, doctor: this.currentDoctor});
     $('#content-region').html(result);
     $('.hovered').on('click', function (e) {
         self.recording(e);

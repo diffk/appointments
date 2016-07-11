@@ -7,6 +7,10 @@
     cursor: pointer;
 }
 
+.centered {
+    text-align: center;
+}
+
 /* loader */
 
 .loading { margin: auto; }
