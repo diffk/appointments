@@ -15,6 +15,7 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use Example\AppBundle\Entity\Doctor;
 use Example\AppBundle\Entity\Shedule;
 use \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use Example\AppBundle\Common\Time;
 
 
 /**
@@ -203,18 +204,8 @@ class ApiController extends Controller
     private function getDateM($weekNumber, $year, $day)
     {
 
-        $days = [
-            1 => 'mon',
-            2 => 'tue',
-            3 => 'wed',
-            4 => 'thu',
-            5 => 'fri',
-            6 => 'sat',
-            7 => 'sun',
-        ];
-
         $year = $year ? $year : date('Y');
-        $day = array_search($day, $days);
+        $day = array_search($day, Time::DAYS_SHORT);
         $weekNumber = sprintf('%02d', $weekNumber);
         $date = strtotime($year.'W'.$weekNumber.$day.' 00:00:00');
 
@@ -230,18 +221,11 @@ class ApiController extends Controller
      */
     private function filteredDays($scheduleList): array
     {
-        $days = [
-            1 => 'mon',
-            2 => 'tue',
-            3 => 'wed',
-            4 => 'thu',
-            5 => 'fri',
-            6 => 'sat',
-            7 => 'sun',
-        ];
 
         $currentDay = strtolower(date('D'));
-        $dayIndex = array_search($currentDay, $days) - 1;
+
+        /** @var int $dayIndex */
+        $dayIndex = array_search($currentDay, Time::DAYS_SHORT) - 1;
         $i = 0;
         foreach ($scheduleList[0]['records'] as $key => &$record) {
             if ($i <= $dayIndex) {
