@@ -63,7 +63,7 @@ class ApiController extends Controller
 
     /**
      *
-     * Pаcписания врача
+     * Pаcписание врача
      *
      * @param Request $request
      * @param int     $id
@@ -145,17 +145,17 @@ class ApiController extends Controller
         $day = $request->request->get('day', 'не указан день');
         $start = $request->request->get('start', 'нет периода');
 
-        $shedule = $this->getDoctrine()->getManager('example')
+        $schedule = $this->getDoctrine()->getManager('example')
                                        ->getRepository('ExampleAppBundle:Shedule')->find($id);
 
-        if (!$shedule) {
+        if (!$schedule) {
             return new JsonResponse(['message' => 'расписание не найдено'], 422);
         }
 
         // TODO userID mockup only
         $result = $this->getDoctrine()->getManager('example')
                                       ->getRepository('ExampleAppBundle:Shedule')->updateShedule(
-                $shedule,
+                $schedule,
                 1,
                 $day,
                 $start
@@ -169,8 +169,8 @@ class ApiController extends Controller
             "Вы записаны на прием к специалисту %s,
             дата посещения: %s,
             время приема %s",
-            $shedule->getDoctor()->getName(),
-            $this->getDateM($shedule->getWeek(), $shedule->getYear(), $day),
+            $schedule->getDoctor()->getName(),
+            $this->getDateM($schedule->getWeek(), $schedule->getYear(), $day),
             $start
         );
 
@@ -183,7 +183,7 @@ class ApiController extends Controller
      *
      * @return string
      */
-    private function getDatesByWeek($weekNumber, $year = null): string 
+    private function getDatesByWeek($weekNumber, $year = null): string
     {
         $year = $year ? $year : date('Y');
         $weekNumber = sprintf('%02d', $weekNumber);
@@ -224,11 +224,11 @@ class ApiController extends Controller
     /**
      * Фильтрация прошедших дат(включая текущий день)
      *
-     * @param array $sheduleList
+     * @param array $scheduleList
      *
      * @return array
      */
-    private function filteredDays($sheduleList): array
+    private function filteredDays($scheduleList): array
     {
         $days = [
             1 => "mon",
@@ -243,13 +243,13 @@ class ApiController extends Controller
         $currentDay = strtolower(date('D'));
         $dayIndex = array_search($currentDay, $days) - 1;
         $i = 0;
-        foreach ($sheduleList[0]['records'] as $key => &$record) {
+        foreach ($scheduleList[0]['records'] as $key => &$record) {
             if ($i <= $dayIndex) {
                 $record = [];
             }
             $i++;
         }
 
-        return $sheduleList;
+        return $scheduleList;
     }
 }
