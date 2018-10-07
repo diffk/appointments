@@ -203,11 +203,11 @@ class ApiController extends Controller
      */
     private function getDateM($weekNumber, $year, $day)
     {
-
         $year = $year ? $year : date('Y');
-        $day = array_search($day, Time::DAYS_SHORT);
+        /** @var int $dayIndex */
+        $dayIndex = array_search($day, Time::DAYS_SHORT, true);
         $weekNumber = sprintf('%02d', $weekNumber);
-        $date = strtotime($year.'W'.$weekNumber.$day.' 00:00:00');
+        $date = strtotime($year.'W'.$weekNumber.$dayIndex.' 00:00:00');
 
         return date('Y-m-d', $date);
     }
@@ -221,11 +221,10 @@ class ApiController extends Controller
      */
     private function filteredDays($scheduleList): array
     {
-
         $currentDay = strtolower(date('D'));
 
         /** @var int $dayIndex */
-        $dayIndex = array_search($currentDay, Time::DAYS_SHORT) - 1;
+        $dayIndex = array_search($currentDay, Time::DAYS_SHORT, true) - 1;
         $i = 0;
         foreach ($scheduleList[0]['records'] as $key => &$record) {
             if ($i <= $dayIndex) {
