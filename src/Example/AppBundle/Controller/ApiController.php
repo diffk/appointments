@@ -50,10 +50,9 @@ class ApiController extends Controller
         $doctorList = [];
 
         if ($doctors) {
+            /** @var Doctor $doctor */
             foreach ($doctors as $doctor) {
-
                 $doctorList[] = $doctor->toArray();
-
             }
         }
 
@@ -94,15 +93,15 @@ class ApiController extends Controller
         $currentYear = date('Y');
         $nextWeek = $currentWeek + $periond;
 
-        $shedules = $this->getDoctrine()
+        $schedules = $this->getDoctrine()
                          ->getManager('example')
                          ->getRepository('ExampleAppBundle:Shedule')
                          ->getSheduleByPeriod($id, $currentYear, $currentWeek, $nextWeek);
 
         $sheduleList = [];
 
-        if ($shedules) {
-            foreach ($shedules as $shedule) {
+        if ($schedules) {
+            foreach ($schedules as $shedule) {
                 $record = $shedule->toArray();
                 $record['period'] = $this->getDatesByWeek($record['week'], $record['year']);
                 $sheduleList[] = $record;
@@ -112,7 +111,6 @@ class ApiController extends Controller
         $sheduleList = $this->filteredDays($sheduleList);
 
         return new JsonResponse($sheduleList, Response::HTTP_OK);
-
     }
 
     /**
@@ -187,17 +185,18 @@ class ApiController extends Controller
     private function getDatesByWeek($weekNumber, $year = null): string
     {
         $year = $year ? $year : date('Y');
-        $weekNumber = sprintf('%02d', $weekNumber);
-        $dateFirst = strtotime($year.'W'.$weekNumber.'1 00:00:00');
-        $dateEnd = strtotime($year.'W'.$weekNumber.'7 23:59:59');
+        /** @var string $weekNumber */
+        $week = sprintf('%02d', $weekNumber);
+        $dateFirst = strtotime($year.'W'.$week.'1 00:00:00');
+        $dateEnd = strtotime($year.'W'.$week.'7 23:59:59');
 
         return date('Y-m-d', $dateFirst).' - '.date('Y-m-d', $dateEnd);
     }
 
     /**
-     * @param $weekNumber
-     * @param $year
-     * @param $day
+     * @param int $weekNumber
+     * @param int $year
+     * @param int $day
      *
      * @return bool|string
      */
@@ -206,8 +205,9 @@ class ApiController extends Controller
         $year = $year ? $year : date('Y');
         /** @var int $dayIndex */
         $dayIndex = array_search($day, Time::DAYS_SHORT, true);
-        $weekNumber = sprintf('%02d', $weekNumber);
-        $date = strtotime($year.'W'.$weekNumber.$dayIndex.' 00:00:00');
+        /** @var string $weekNumber */
+        $week = sprintf('%02d', $weekNumber);
+        $date = strtotime($year.'W'.$week.$dayIndex.' 00:00:00');
 
         return date('Y-m-d', $date);
     }
