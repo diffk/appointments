@@ -56,7 +56,7 @@ class ApiController extends Controller
             }
         }
 
-        $response = new JsonResponse($doctorList, 200);
+        $response = new JsonResponse($doctorList, Response::HTTP_OK);
 
         return $response->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
@@ -110,7 +110,7 @@ class ApiController extends Controller
 
         $sheduleList = $this->filteredDays($sheduleList);
 
-        return new JsonResponse($sheduleList, 200);
+        return new JsonResponse($sheduleList, Response::HTTP_OK);
 
     }
 
@@ -149,7 +149,7 @@ class ApiController extends Controller
                                        ->getRepository('ExampleAppBundle:Shedule')->find($id);
 
         if (!$schedule) {
-            return new JsonResponse(['message' => 'расписание не найдено'], 422);
+            return new JsonResponse(['message' => 'расписание не найдено'], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         // TODO userID mockup only
@@ -162,7 +162,7 @@ class ApiController extends Controller
             );
 
         if (!$result) {
-            return new JsonResponse(['message' => 'занято, выберите другой период'], 422);
+            return new JsonResponse(['message' => 'занято, выберите другой период'], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $message = sprintf(
@@ -174,7 +174,7 @@ class ApiController extends Controller
             $start
         );
 
-        return new JsonResponse(['message' => $message], 200);
+        return new JsonResponse(['message' => $message], Response::HTTP_OK);
     }
 
     /**
