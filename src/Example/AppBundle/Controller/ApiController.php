@@ -166,9 +166,9 @@ class ApiController extends Controller
         }
 
         $message = sprintf(
-            "Вы записаны на прием к специалисту %s,
+            'Вы записаны на прием к специалисту %s,
             дата посещения: %s,
-            время приема %s",
+            время приема %s',
             $schedule->getDoctor()->getName(),
             $this->getDateM($schedule->getWeek(), $schedule->getYear(), $day),
             $start
@@ -204,13 +204,13 @@ class ApiController extends Controller
     {
 
         $days = [
-            1 => "mon",
-            2 => "tue",
-            3 => "wed",
-            4 => "thu",
-            5 => "fri",
-            6 => "sat",
-            7 => "sun",
+            1 => 'mon',
+            2 => 'tue',
+            3 => 'wed',
+            4 => 'thu',
+            5 => 'fri',
+            6 => 'sat',
+            7 => 'sun',
         ];
 
         $year = $year ? $year : date('Y');
@@ -231,13 +231,13 @@ class ApiController extends Controller
     private function filteredDays($scheduleList): array
     {
         $days = [
-            1 => "mon",
-            2 => "tue",
-            3 => "wed",
-            4 => "thu",
-            5 => "fri",
-            6 => "sat",
-            7 => "sun",
+            1 => 'mon',
+            2 => 'tue',
+            3 => 'wed',
+            4 => 'thu',
+            5 => 'fri',
+            6 => 'sat',
+            7 => 'sun',
         ];
 
         $currentDay = strtolower(date('D'));
