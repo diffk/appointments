@@ -25,6 +25,7 @@ use Example\AppBundle\Common\Time;
  */
 class ApiController extends Controller
 {
+    use Time;
     /**
      *
      * Список врачей
@@ -140,7 +141,6 @@ class ApiController extends Controller
      */
     public function updateSheduleAction(Request $request, $id)
     {
-
         $day = $request->request->get('day', 'не указан день');
         $start = $request->request->get('start', 'нет периода');
 
@@ -174,65 +174,5 @@ class ApiController extends Controller
         );
 
         return new JsonResponse(['message' => $message], Response::HTTP_OK);
-    }
-
-    /**
-     * @param int $weekNumber
-     * @param null $year
-     *
-     * @return string
-     */
-    private function getDatesByWeek($weekNumber, $year = null): string
-    {
-        $year = $year ? $year : date('Y');
-        /** @var string $weekNumber */
-        $week = sprintf('%02d', $weekNumber);
-        $dateFirst = strtotime($year.'W'.$week.'1 00:00:00');
-        $dateEnd = strtotime($year.'W'.$week.'7 23:59:59');
-
-        return date('Y-m-d', $dateFirst).' - '.date('Y-m-d', $dateEnd);
-    }
-
-    /**
-     * @param int $weekNumber
-     * @param int $year
-     * @param int $day
-     *
-     * @return bool|string
-     */
-    private function getDateM($weekNumber, $year, $day)
-    {
-        $year = $year ? $year : date('Y');
-        /** @var int $dayIndex */
-        $dayIndex = array_search($day, Time::DAYS_SHORT, true);
-        /** @var string $weekNumber */
-        $week = sprintf('%02d', $weekNumber);
-        $date = strtotime($year.'W'.$week.$dayIndex.' 00:00:00');
-
-        return date('Y-m-d', $date);
-    }
-
-    /**
-     * Фильтрация прошедших дат(включая текущий день)
-     *
-     * @param array $scheduleList
-     *
-     * @return array
-     */
-    private function filteredDays($scheduleList): array
-    {
-        $currentDay = strtolower(date('D'));
-
-        /** @var int $dayIndex */
-        $dayIndex = array_search($currentDay, Time::DAYS_SHORT, true) - 1;
-        $i = 0;
-        foreach ($scheduleList[0]['records'] as $key => &$record) {
-            if ($i <= $dayIndex) {
-                $record = [];
-            }
-            $i++;
-        }
-
-        return $scheduleList;
     }
 }
