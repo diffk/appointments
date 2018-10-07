@@ -11,7 +11,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Delete;
-
 use Example\AppBundle\Entity\Doctor;
 use Example\AppBundle\Entity\Shedule;
 use \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
@@ -26,6 +25,7 @@ use Example\AppBundle\Common\Time;
 class ApiController extends Controller
 {
     use Time;
+
     /**
      *
      * Список врачей

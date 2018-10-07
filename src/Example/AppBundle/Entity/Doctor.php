@@ -35,7 +35,7 @@ class Doctor {
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="Shedule", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="Shedule", mappedBy="doctor")
      */
     private $shedules;
 

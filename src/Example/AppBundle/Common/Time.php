@@ -4,7 +4,7 @@ namespace Example\AppBundle\Common;
 
 /**
  * Trait Time
- * 
+ *
  * @package Example\AppBundle\Common
  */
 trait Time
