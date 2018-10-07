@@ -19,7 +19,7 @@ use \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
 /**
  * Class ApiController
- * 
+ *
  * @package Example\AppBundle\Controller
  */
 class ApiController extends Controller
@@ -44,8 +44,7 @@ class ApiController extends Controller
     public function getDoctorList()
     {
         $doctors = $this->getDoctrine()->getManager('example')
-            ->getRepository('ExampleAppBundle:Doctor')
-            ->findAll();
+                                       ->getRepository('ExampleAppBundle:Doctor')->findAll();
 
         $doctorList = [];
 
@@ -67,7 +66,7 @@ class ApiController extends Controller
      * Pаcписания врача
      *
      * @param Request $request
-     * @param $id
+     * @param int     $id
      *
      * @ApiDoc(
      *  section="Api",
@@ -94,9 +93,10 @@ class ApiController extends Controller
         $currentYear = date('Y');
         $nextWeek = $currentWeek + $periond;
 
-        $shedules = $this->getDoctrine()->getManager('example')
-            ->getRepository('ExampleAppBundle:Shedule')
-            ->getSheduleByPeriod($id, $currentYear, $currentWeek, $nextWeek);
+        $shedules = $this->getDoctrine()
+                         ->getManager('example')
+                         ->getRepository('ExampleAppBundle:Shedule')
+                         ->getSheduleByPeriod($id, $currentYear, $currentWeek, $nextWeek);
 
         $sheduleList = [];
 
@@ -118,7 +118,7 @@ class ApiController extends Controller
      * Обновление записи о расписании
      *
      * @param Request $request
-     * @param $id
+     * @param         $id
      *
      * @ApiDoc(
      *  section="Api",
@@ -146,8 +146,7 @@ class ApiController extends Controller
         $start = $request->request->get('start', 'нет периода');
 
         $shedule = $this->getDoctrine()->getManager('example')
-            ->getRepository('ExampleAppBundle:Shedule')
-            ->find($id);
+                                       ->getRepository('ExampleAppBundle:Shedule')->find($id);
 
         if (!$shedule) {
             return new JsonResponse(['message' => 'расписание не найдено'], 422);
@@ -155,8 +154,12 @@ class ApiController extends Controller
 
         // TODO userID mockup only
         $result = $this->getDoctrine()->getManager('example')
-            ->getRepository('ExampleAppBundle:Shedule')
-            ->updateShedule($shedule, 1, $day, $start);
+                                      ->getRepository('ExampleAppBundle:Shedule')->updateShedule(
+                $shedule,
+                1,
+                $day,
+                $start
+            );
 
         if (!$result) {
             return new JsonResponse(['message' => 'занято, выберите другой период'], 422);
@@ -177,22 +180,24 @@ class ApiController extends Controller
     /**
      * @param int $weekNumber
      * @param null $year
+     *
      * @return string
      */
     private function getDatesByWeek($weekNumber, $year = null)
     {
         $year = $year ? $year : date('Y');
         $weekNumber = sprintf('%02d', $weekNumber);
-        $dateFirst = strtotime($year . 'W' . $weekNumber . '1 00:00:00');
-        $dateEnd = strtotime($year . 'W' . $weekNumber . '7 23:59:59');
+        $dateFirst = strtotime($year.'W'.$weekNumber.'1 00:00:00');
+        $dateEnd = strtotime($year.'W'.$weekNumber.'7 23:59:59');
 
-        return date('Y-m-d', $dateFirst) . ' - ' . date('Y-m-d', $dateEnd);
+        return date('Y-m-d', $dateFirst).' - '.date('Y-m-d', $dateEnd);
     }
 
     /**
      * @param $weekNumber
      * @param $year
      * @param $day
+     *
      * @return bool|string
      */
     private function getDateM($weekNumber, $year, $day)
@@ -205,13 +210,13 @@ class ApiController extends Controller
             4 => "thu",
             5 => "fri",
             6 => "sat",
-            7 => "sun"
+            7 => "sun",
         ];
 
         $year = $year ? $year : date('Y');
         $day = array_search($day, $days);
         $weekNumber = sprintf('%02d', $weekNumber);
-        $date = strtotime($year . 'W' . $weekNumber . $day . ' 00:00:00');
+        $date = strtotime($year.'W'.$weekNumber.$day.' 00:00:00');
 
         return date('Y-m-d', $date);
     }
@@ -220,6 +225,7 @@ class ApiController extends Controller
      * Фильтрация прошедших дат(включая текущий день)
      *
      * @param array $sheduleList
+     *
      * @return array
      */
     private function filteredDays($sheduleList)
@@ -231,7 +237,7 @@ class ApiController extends Controller
             4 => "thu",
             5 => "fri",
             6 => "sat",
-            7 => "sun"
+            7 => "sun",
         ];
 
         $currentDay = strtolower(date('D'));
