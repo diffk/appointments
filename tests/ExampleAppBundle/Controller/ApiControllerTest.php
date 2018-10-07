@@ -4,18 +4,16 @@ namespace Example\AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class ApiControllerTest extends WebTestCase
 {
-    public function testIndex()
+    public function testApi()
     {
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/api/doctor');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        //$this->assertContains('Пирогов Иван Иванович', $crawler->filter('.element td')->text());
-        $data = $client->getResponse()->getContent();
-
-        //$this->assertContains('расписание доктора', $client->getResponse()->getContent());
+        $data = json_decode($client->getResponse()->getContent(), true);
+        $this->assertContains('Пирогов Иван Иванович', $data[0]['name']);
     }
 }
