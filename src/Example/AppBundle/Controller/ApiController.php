@@ -183,7 +183,7 @@ class ApiController extends Controller
      *
      * @return string
      */
-    private function getDatesByWeek($weekNumber, $year = null)
+    private function getDatesByWeek($weekNumber, $year = null): string 
     {
         $year = $year ? $year : date('Y');
         $weekNumber = sprintf('%02d', $weekNumber);
@@ -228,7 +228,7 @@ class ApiController extends Controller
      *
      * @return array
      */
-    private function filteredDays($sheduleList)
+    private function filteredDays($sheduleList): array
     {
         $days = [
             1 => "mon",
