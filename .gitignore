@@ -16,3 +16,4 @@
 /web/bundles/
 .idea
 tmp
+app/data/*.db3
