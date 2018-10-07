@@ -68,7 +68,7 @@ class LoadSheduleData implements FixtureInterface
 
                 $testShedule = new Shedule();
                 $testShedule->setDoctor($doctor);
-                $testShedule->setYear(2016);
+                $testShedule->setYear((int)date('Y'));
                 $testShedule->setWeek($i);
                 $testShedule->setRecords(json_encode($opened));
 
