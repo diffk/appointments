@@ -14,10 +14,12 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 
 use Example\AppBundle\Entity\Doctor;
 use Example\AppBundle\Entity\Shedule;
+use \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
 
 /**
  * Class ApiController
+ * 
  * @package Example\AppBundle\Controller
  */
 class ApiController extends Controller
@@ -35,6 +37,9 @@ class ApiController extends Controller
      * )
      *
      * @Get("/doctor")
+     *
+     * @throws \LogicException
+     * @throws \InvalidArgumentException
      */
     public function getDoctorList()
     {
@@ -75,6 +80,10 @@ class ApiController extends Controller
      * @Get("/doctor/{id}/shedule")
      *
      * @return JsonResponse
+     *
+     * @throws \LogicException
+     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function getShedule(Request $request, $id)
     {
@@ -126,6 +135,9 @@ class ApiController extends Controller
      * @Post("/shedule/{id}")
      *
      * @return JsonResponse
+     *
+     * @throws \LogicException
+     * @throws \InvalidArgumentException
      */
     public function updateSheduleAction(Request $request, $id)
     {
